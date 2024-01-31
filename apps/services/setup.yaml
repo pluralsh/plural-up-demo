@@ -1,0 +1,15 @@
+apiVersion: deployments.plural.sh/v1alpha1
+kind: GitRepository
+metadata:
+  name: infra
+  namespace: infra
+spec:
+  url: {{ configuration.repoUrl }}
+---
+apiVersion: deployments.plural.sh/v1alpha1
+kind: Cluster
+metadata:
+  name: mgmt
+  namespace: infra
+spec:
+  handle: mgmt
