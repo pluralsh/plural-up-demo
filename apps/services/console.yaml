@@ -1,0 +1,26 @@
+apiVersion: deployments.plural.sh/v1alpha1
+kind: ServiceDeployment
+metadata:
+  name: console
+  namespace: infra
+spec:
+  namespace: plrl-console
+  git:
+    folder: helm-values
+    ref: main
+  repositoryRef:
+    kind: GitRepository
+    name: infra
+    namespace: infra
+  helm:
+    version: "0.x.x"
+    chart: console
+    valuesFiles:
+    - console.yaml
+    repository:
+      namespace: infra
+      name: console
+  clusterRef:
+    kind: Cluster
+    name: mgmt
+    namespace: infra

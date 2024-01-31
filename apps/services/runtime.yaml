@@ -1,0 +1,81 @@
+
+apiVersion: deployments.plural.sh/v1alpha1
+kind: ServiceDeployment
+metadata:
+  name: cert-manager
+  namespace: infra
+spec:
+  namespace: cert-manager
+  git:
+    folder: helm-values
+    ref: main
+  repositoryRef:
+    kind: GitRepository
+    name: infra
+    namespace: infra
+  helm:
+    version: "v1.13.3"
+    chart: cert-manager
+    valuesFiles:
+    - certmanager.yaml
+    repository:
+      namespace: plural-runtime
+      name: cert-manager
+  clusterRef:
+    kind: Cluster
+    name: mgmt
+    namespace: infra
+---
+apiVersion: deployments.plural.sh/v1alpha1
+kind: ServiceDeployment
+metadata:
+  name: flux
+  namespace: infra
+spec:
+  namespace: flux
+  git:
+    folder: helm-values
+    ref: main
+  repositoryRef:
+    kind: GitRepository
+    name: infra
+    namespace: infra
+  helm:
+    version: "2.12.2"
+    chart: flux2
+    valuesFiles:
+    - flux.yaml
+    repository:
+      namespace: plural-runtime
+      name: flux
+  clusterRef:
+    kind: Cluster
+    name: mgmt
+    namespace: infra
+---
+apiVersion: deployments.plural.sh/v1alpha1
+kind: ServiceDeployment
+metadata:
+  name: runtime
+  namespace: infra
+spec:
+  namespace: plural-runtime
+  git:
+    folder: helm-values
+    ref: main
+  repositoryRef:
+    kind: GitRepository
+    name: infra
+    namespace: infra
+  helm:
+    version: "0.x.x"
+    chart: runtime
+    valuesFiles:
+    - runtime.yaml
+    repository:
+      namespace: infra
+      name: runtime
+  clusterRef:
+    kind: Cluster
+    name: mgmt
+    namespace: infra
