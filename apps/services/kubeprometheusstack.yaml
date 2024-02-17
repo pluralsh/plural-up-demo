@@ -1,0 +1,37 @@
+apiVersion: deployments.plural.sh/v1alpha1
+kind: ServiceDeployment
+metadata:
+  name: kube-prometheus-stack
+  namespace: infra
+spec:
+  namespace: monitoring
+  git:
+    folder: helm-values
+    ref: main
+  repositoryRef:
+    kind: GitRepository
+    name: infra
+    namespace: infra
+  helm:
+    version: 56.5.0
+    chart: kube-prometheus-stack
+    valuesFiles:
+    - kubeprometheusstack.yaml
+    repository:
+      name: prometheus-community
+      namespace: infra
+  clusterRef:
+    kind: Cluster
+    name: mgmt
+    namespace: infra
+---
+# make global so it's also deployed on the other clusters
+apiVersion: deployments.plural.sh/v1alpha1
+kind: GlobalService
+metadata:
+  name: kube-prometheus-stack
+  namespace: infra
+spec:
+  serviceRef:
+    name: kube-promotheues-stack
+    namespace: infra
