@@ -1,0 +1,17 @@
+global:
+  rbac:
+    pspEnabled: false
+
+kubeControllerManager:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+defaultRules:
+  rules:
+    kubeProxy: false
+
+grafana:
+  enabled: false
+
