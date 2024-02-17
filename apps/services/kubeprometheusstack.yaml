@@ -4,7 +4,7 @@ metadata:
   name: kube-prometheus-stack
   namespace: infra
 spec:
-  namespace: kps
+  namespace: monitoring
   git:
     folder: helm-values
     ref: main
